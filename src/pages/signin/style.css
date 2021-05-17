@@ -1,0 +1,11 @@
+.signin{
+    display: grid;
+    place-items: center;
+    background-color: black;
+    height: 100vh;
+}
+
+.signin > img {
+    width: 100%;
+}
+
