@@ -1,19 +1,17 @@
 import React from 'react';
-import { useDataLayerValue } from '../../helpers/datalayer';
+import Body from '../../containers/body';
+import Footer from '../../containers/footer';
+import Sidebar from '../../containers/sidebar';
 import "./style.css";
 
 export default function Home({spotify}) {
-
-    const [{ user }, dispatch] = useDataLayerValue();
-    
-
-    console.log(user);
     return (
     <div className="home">
         <div className="home__body">
-
+            <Sidebar />
+            <Body spotify={spotify} />
         </div>
-        
+        <Footer spotify={spotify} />
     </div>
     );
 };

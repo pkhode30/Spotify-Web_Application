@@ -1,32 +1,70 @@
-export const initialState ={
+import { findAllByDisplayValue } from "@testing-library/react";
+
+export const initialState = {
     user: null,
-    //set null after debugging
-    token: "BQAFgIuTU5qcJ1k_N3OiTwPa1A3QOTIi1N6v6FXFe7E77bGW66dqZzP7M5mbHfSNszioZXmmuXPpvt6tle0p6x78obzxprCHir4cQzBNBjvdJbm5i0AYu3yJSGZw2T34CDE8zbzKMSsojDSc-zMt6Otyvp9CR9U7D_0oAD48eazj2IeH9sb2",
     playlists: [],
-    playying: false,
+    spotify: null,
+    discover_weekly: null,
+    top_artists: null,
+    playing: false,
     item: null,
-
-};
-
-const reducer = (state, action) => {
+  };
+  
+  const reducer = (state, action) => {
     console.log(action);
-
     switch (action.type) {
-        case "SET_USER":
-            return{
-                ...state,
-                user: action.user
-            };
+      case "SET_USER":
+        return {
+          ...state,
+          user: action.user,
+        };
+  
+      case "SET_PLAYING":
+        return {
+          ...state,
+          playing: action.playing,
+        };
+  
+      case "SET_ITEM":
+        return {
+          ...state,
+          item: action.item,
+        };
+  
+      case "SET_DISCOVER_WEEKLY":
+        return {
+          ...state,
+          discover_weekly: action.discover_weekly,
+        };
+  
+      case "SET_TOP_ARTISTS":
+        return {
+          ...state,
+          top_artists: action.top_artists,
+        };
+  
+      case "SET_TOKEN":
+        return {
+          ...state,
+          token: action.token,
+        };
+  
+      case "SET_SPOTIFY":
+        return {
+          ...state,
+          spotify: action.spotify,
+        };
+  
+      case "SET_PLAYLISTS":
+        return {
+          ...state,
+          playlists: action.playlists,
+        };
         
-        case "SET_TOKEN":
-            return{
-                ...state,
-                token: action.token
-            };
-    
-        default:
-            return state;
+      default:
+        return state;
     }
-}
-
-export default reducer;
+  };
+  
+  export default reducer;
+  
