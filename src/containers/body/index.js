@@ -9,45 +9,37 @@ import SongRow from '../../components/song-row';
 
 export default function Body({ spotify }) {
 
-    const [{discover_weekly}, dispatch] = useDataLayerValue();
+  const [{discover_weekly}, dispatch] = useDataLayerValue();
 
-    const playPlaylist = (id) => {
-        spotify
-          .play({
-            context_uri: `spotify:playlist:37i9dQZEVXcJZyENOWUFo7`,
-          })
-          .then((res) => {
+  const playPlaylist = (id) => {
+    spotify.play({  context_uri: `spotify:playlist:${id}`, }).then((res) => {
             spotify.getMyCurrentPlayingTrack().then((r) => {
-              dispatch({
-                type: "SET_ITEM",
-                item: r.item,
-              });
-              dispatch({
-                type: "SET_PLAYING",
-                playing: true,
-              });
+                    dispatch({
+                      type: "SET_ITEM",
+                      item: r.item,
+                    });
+                    dispatch({
+                      type: "SET_PLAYING",
+                      playing: true,
+                    });
             });
-          });
-      };
+    });
+  };
     
-      const playSong = (id) => {
-        spotify
-          .play({
-            uris: [`spotify:track:${id}`],
-          })
-          .then((res) => {
+  const playSong = (id) => {
+    spotify.play({ uris: [`spotify:track:${id}`], }).then((res) => {
             spotify.getMyCurrentPlayingTrack().then((r) => {
-              dispatch({
-                type: "SET_ITEM",
-                item: r.item,
-              });
-              dispatch({
-                type: "SET_PLAYING",
-                playing: true,
-              });
+                    dispatch({
+                      type: "SET_ITEM",
+                      item: r.item,
+                    });
+                    dispatch({
+                      type: "SET_PLAYING",
+                      playing: true,
+                    });
             });
-          });
-      };
+    });
+  };
 
     return (
     <div className="body">
@@ -68,6 +60,7 @@ export default function Body({ spotify }) {
                 <FavoriteIcon fontSize="large" />
                 <MoreHorizIcon />
             </div>
+            
             { discover_weekly ? discover_weekly.tracks.items.map((item) => (
                     <SongRow track={item.track} playSong={playSong} />
                     )

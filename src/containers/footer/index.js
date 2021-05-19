@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./style.css";
 
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
@@ -15,12 +15,15 @@ import { Grid, Slider } from "@material-ui/core";
 import { useDataLayerValue } from '../../helpers/datalayer';
 
 export default function Footer({spotify}) {
+  
+  const [{ token, item, playing }, dispatch] = useDataLayerValue();
+  const [value, setValue] = React.useState(30);
 
-    const [{ token, item, playing }, dispatch] = useDataLayerValue();
     
     useEffect(() => {
+
     spotify.getMyCurrentPlaybackState().then((r) => {
-      console.log(r);
+      console.log("Current state:>>>>>", r);
 
       dispatch({
         type: "SET_PLAYING",
@@ -33,6 +36,9 @@ export default function Footer({spotify}) {
       });
     });
   }, [spotify]);
+
+  const handleShuffle = () => {
+  }
 
   const handlePlayPause = () => {
     if (playing) {
@@ -78,6 +84,13 @@ export default function Footer({spotify}) {
     });
   };
 
+
+  const changeVolume = (event, newvalue) => {
+    console.log(newvalue);
+    setValue(newvalue);
+    spotify.setVolume(parseInt(newvalue));
+  }
+
     return (
     <div className="footer">
         <div className="footer__left">
@@ -100,8 +113,8 @@ export default function Footer({spotify}) {
         </div>
 
         <div className="footer__center">
-        <ShuffleIcon className="footer__green" />
-        <SkipPreviousIcon onClick={skipNext} className="footer__icon" />
+        <ShuffleIcon onClick={handleShuffle} className="footer__green" />
+        <SkipPreviousIcon onClick={skipPrevious} className="footer__icon" />
         {playing ? (
           <PauseCircleOutlineIcon
             onClick={handlePlayPause}
@@ -115,7 +128,7 @@ export default function Footer({spotify}) {
             className="footer__icon"
           />
         )}
-        <SkipNextIcon onClick={skipPrevious} className="footer__icon" />
+        <SkipNextIcon onClick={skipNext} className="footer__icon" />
         <RepeatIcon className="footer__green" />
         </div>
 
@@ -128,7 +141,7 @@ export default function Footer({spotify}) {
                     <VolumeDownIcon />
                 </Grid>
                 <Grid item xs>
-                    <Slider />
+                    <Slider value={value} onChange={changeVolume} />
                 </Grid>
             </Grid>
         </div>

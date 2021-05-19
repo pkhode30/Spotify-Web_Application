@@ -11,10 +11,9 @@ const spotify = new SpotifyWebApi();
 function App() {
   const [{ token }, dispatch] = useDataLayerValue();
 
-    //Run code based on given condition
   useEffect(() => {
     const hash = getTokenFromUrl();
-    window.location.hash = "";
+    window.location.hash = "SigninSucessful";
     const _token = hash.access_token;
 
     if(_token){
@@ -26,6 +25,7 @@ function App() {
         token: _token,
       })
 
+  
       spotify.getPlaylist('37i9dQZEVXcGmTnqQNoy9e').then( response => {
         dispatch({
           type: "SET_DISCOVER_WEEKLY",

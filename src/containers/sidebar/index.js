@@ -10,8 +10,6 @@ export default function Sidebar() {
 
     const [{ playlists }, dispatch] = useDataLayerValue();
 
-    console.log(playlists);
-
     return (
     <div className="sidebar">
         {/* Spoify Banner */}
