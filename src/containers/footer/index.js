@@ -16,26 +16,29 @@ import { useDataLayerValue } from '../../helpers/datalayer';
 
 export default function Footer({spotify}) {
   
-  const [{ token, item, playing }, dispatch] = useDataLayerValue();
-  const [value, setValue] = React.useState(30);
-
+  const [{ item, playing }, dispatch] = useDataLayerValue();
+  const [value, setValue] = useState(50);
     
-    useEffect(() => {
+  useEffect(() => {
 
-    spotify.getMyCurrentPlaybackState().then((r) => {
-      console.log("Current state:>>>>>", r);
-
-      dispatch({
-        type: "SET_PLAYING",
-        playing: r.is_playing,
+    const getCurrentState = async () => {
+      await spotify.getMyCurrentPlaybackState().then((r) => {
+        console.log("Current state:>>>>>", r);
+  
+        dispatch({
+          type: "SET_PLAYING",
+          playing: r.is_playing,
+        });
+  
+        dispatch({
+          type: "SET_ITEM",
+          item: r.item,
+        });
       });
+    }
 
-      dispatch({
-        type: "SET_ITEM",
-        item: r.item,
-      });
-    });
-  }, [spotify]);
+    getCurrentState();
+  }, [spotify, dispatch]);
 
   const handleShuffle = () => {
   }
